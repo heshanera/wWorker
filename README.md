@@ -17,4 +17,7 @@ execute(method, args, callback);
 ## How It Works
 Initially a web worker will be created from the `initWorker.js`.  When the `execute` method is called, it will pass the arguments to web worker and the output from the worker results will be the input for the callback function.
   
+## Demo
+
+![Sorting](https://github.com/heshanera/wWorker/blob/master/demo/sort.gif)
 
