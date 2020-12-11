@@ -4,6 +4,9 @@
         <link rel="stylesheet" href="index.css">
     </head>
     <body>
+        <div class="offline">
+            <div class="notification"> Connection lost: reconnecting... </div>
+        </div>
         <div class="box">
             <div class="header">
                 <h1>Test Worker</h1>
@@ -20,17 +23,28 @@
             </div>
             <div class="footer"></div>
         </div>
-        <script src="initWorker.js"></script>
+        <script src="initWorkers.js"></script>
         <script>
             updateArray = (value) => {
                 document.getElementById("array").innerHTML = value;
-            }
+            };
 
             resetArray = () => {
                 document.getElementById("array").innerHTML = '1,9,5,4,3,8,0,2,3';
-            }
+            };
+
+            showOfflineNotification = (connection) => {
+                const { offline } = connection;
+                const offlineNotification = document.getElementsByClassName('offline');
+                if (offline) {
+                    offlineNotification[0].style.display = 'block';
+                } else {
+                    offlineNotification[0].style.display = 'none';
+                }
+            };
 
             resetArray();
+            detectOffline('https://api.github.com', 50000, showOfflineNotification);
         </script>
     </body>
 </html>
