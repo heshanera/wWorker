@@ -30,10 +30,14 @@ const execute = (callable, args = [], callback) => {
     processExecutor.onmessage = (e) => {
         const { callbackId, result } = e.data;
         typeof callbackMap[callbackId] === 'function' && callbackMap[callbackId].apply(null, [ result ]);
+        // remove callback from callback map
+        delete callbackMap[callbackId];
     }
 
     // handle worker errors
     processExecutor.onerror = (e) => {
+        // remove callback from callback map
+        delete callbackMap[callbackId];
         throw new Error(e.message);
     }
 };
@@ -58,10 +62,14 @@ const detectOffline = (url, interval, callback) => {
     offlineDetector.onmessage = (e) => {
         const { callbackId, result } = e.data;
         typeof callbackMap[callbackId] === 'function' && callbackMap[callbackId].apply(null, [ result ]);
+        // remove callback from callback map
+        delete callbackMap[callbackId];
     }
 
     // handle offline detector worker errors
     offlineDetector.onerror = (e) => {
+        // remove callback from callback map
+        delete callbackMap[callbackId];
         throw new Error(e.message);
     }
 };
